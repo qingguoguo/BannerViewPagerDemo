@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 轮播条 -->
+    <declare-styleable name="BannerView">
+        <!-- 点的选中的颜色值 -->
+        <attr name="qgg_dotIndicatorFocus"  format="color|reference"/>
+        <!-- 点的默认的颜色值 -->
+        <attr name="qgg_dotIndicatorNormal"  format="color|reference"/>
+        <!-- 点的大小 -->
+        <attr name="qgg_dotSize" format="dimension"/>
+        <!-- 点的间距 -->
+        <attr name="qgg_dotDistance" format="dimension"/>
+        <!-- 点的位置 -->
+        <attr name="qgg_dotGravity" format="enum">
+            <enum name="center" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="left" value="-1"/>
+        </attr>
+        <!-- 底部的颜色 -->
+        <attr name="qgg_bottomColor" format="color"/>
+        <!-- 定义宽高比 -->
+        <attr name="qgg_withProportion" format="float"/>
+        <attr name="qgg_heightProportion" format="float"/>
+    </declare-styleable>
+</resources>
