@@ -42,7 +42,7 @@ ext {
     userOrg = 'qingguoguo'
     groupId = 'com.qingguoguo'
     uploadName = 'bannerview'
-    publishVersion = '1.0.0'
+    publishVersion = '1.2.0'
     desc = '封装的ViewPager可以用来做banner'
     website = 'https://github.com/qingguoguo/BannerViewPagerDemo'
     licences = ['Apache-2.0']
