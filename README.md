@@ -1,4 +1,4 @@
-# BannerViewPager
+# BannerView
 ### BannerView简介
 封装ViewPager成BannerView  
 
