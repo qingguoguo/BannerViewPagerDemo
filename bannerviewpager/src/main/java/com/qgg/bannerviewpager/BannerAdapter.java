@@ -17,7 +17,7 @@ public abstract class BannerAdapter {
     public abstract int getCount();
 
     /**
-     * 根据position获取广告位描述
+     * 根据position获取描述信息
      */
     public String getBannerDesc(int position) {
         return "";

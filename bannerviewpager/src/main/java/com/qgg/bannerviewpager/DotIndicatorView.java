@@ -11,6 +11,9 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+/**
+ * 自定义圆点View
+ */
 public class DotIndicatorView extends ImageView {
 
     private Drawable drawable;
@@ -31,8 +34,6 @@ public class DotIndicatorView extends ImageView {
     protected void onDraw(Canvas canvas) {
         drawable = getDrawable();
         if (drawable != null) {
-            /*drawable.setBounds(0,0,getMeasuredWidth(),getMeasuredHeight());
-            drawable.draw(canvas);*/
             if (drawable instanceof BitmapDrawable) {
                 super.onDraw(canvas);
                 return;
@@ -81,12 +82,8 @@ public class DotIndicatorView extends ImageView {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
         }
-        // 其他类型 ColorDrawable
-        // 创建一个什么也没有的bitmap
         Bitmap outBitmap = Bitmap.createBitmap(getMeasuredWidth(), getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-        // 创建一个画布
         Canvas canvas = new Canvas(outBitmap);
-        // 把drawable化到Bitmap上
         drawable.setBounds(0, 0, getMeasuredWidth(), getMeasuredHeight());
         drawable.draw(canvas);
         return outBitmap;

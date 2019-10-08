@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -83,12 +84,12 @@ public class BannerView extends RelativeLayout {
         // 获取点的颜色（默认、选中）
         mIndicatorFocusDrawable = array.getDrawable(R.styleable.BannerView_qgg_dotIndicatorFocus);
         if (mIndicatorFocusDrawable == null) {
-            // 如果在布局文件中没有配置点的颜色  有一个默认值
+            // 如果在布局文件中没有配置点的颜色，使用默认值
             mIndicatorFocusDrawable = new ColorDrawable(Color.RED);
         }
         mIndicatorNormalDrawable = array.getDrawable(R.styleable.BannerView_qgg_dotIndicatorNormal);
         if (mIndicatorNormalDrawable == null) {
-            // 如果在布局文件中没有配置点的颜色  有一个默认值
+            // 如果在布局文件中没有配置点的颜色，使用默认值
             mIndicatorNormalDrawable = new ColorDrawable(Color.WHITE);
         }
         // 获取点的大小和距离
@@ -143,7 +144,7 @@ public class BannerView extends RelativeLayout {
         String firstDesc = mAdapter.getBannerDesc(0);
         mBannerDescTv.setText(firstDesc);
 
-        // Log.e(TAG, mHeightProportion + "  ----  " + mWidthProportion)
+        // Log.e(TAG, mHeightProportion + "--------------------------------" + mWidthProportion)
         // 自适应高度 动态指定高度
         if (mHeightProportion == 0 || mWidthProportion == 0) {
             return;
@@ -166,20 +167,33 @@ public class BannerView extends RelativeLayout {
      * 页面切换的回调
      */
     private void pageSelect(int position) {
-        //把之前亮着的点 设置为默认
+        // 把之前亮着的点 设置为默认
         DotIndicatorView oldIndicatorView = (DotIndicatorView)
                 mDotContainerView.getChildAt(mCurrentPosition);
         oldIndicatorView.setImageDrawable(mIndicatorNormalDrawable);
 
-        //把当前位置的点 点亮  position 0 --> 2的31次方
+        // 把当前位置的点亮  position 0到2的31次方
         mCurrentPosition = position % mAdapter.getCount();
         DotIndicatorView currentIndicatorView = (DotIndicatorView)
                 mDotContainerView.getChildAt(mCurrentPosition);
         currentIndicatorView.setImageDrawable(mIndicatorFocusDrawable);
 
-        //设置广告描述
+        // 设置广告描述
         String bannerDesc = mAdapter.getBannerDesc(mCurrentPosition);
         mBannerDescTv.setText(bannerDesc);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mBannerVp.pauseRoll();
+                break;
+            case MotionEvent.ACTION_UP:
+                mBannerVp.startRoll();
+                break;
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     /**
@@ -188,14 +202,13 @@ public class BannerView extends RelativeLayout {
     private void initDotIndicator() {
         // 获取广告的数量
         int count = mAdapter.getCount();
-
         // 让点的位置在右边
         mDotContainerView.setGravity(getDotGravity());
 
         mDotContainerView.removeAllViews();
 
         for (int i = 0; i < count; i++) {
-            // 不断的往点的指示器添加圆点
+            // 往点的指示器添加圆点
             DotIndicatorView indicatorView = new DotIndicatorView(mContext);
             // 设置大小
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mDotSize, mDotSize);

@@ -132,14 +132,25 @@ public class BannerViewPager extends ViewPager {
      */
     @Override
     protected void onDetachedFromWindow() {
+        Log.e(TAG, "onDetachedFromWindow");
         if (mHandler != null) {
-            // 销毁Handler的生命周期
+            // 销毁Handler
             mHandler.removeMessages(SCROLL_MSG);
             // 解除绑定
             mActivity.getApplication().unregisterActivityLifecycleCallbacks(mActivityLifecycleCallbacks);
             mHandler = null;
+            mActivity = null;
         }
         super.onDetachedFromWindow();
+    }
+
+    /**
+     * 暂停滚动
+     */
+    public void pauseRoll() {
+        if (mHandler != null) {
+            mHandler.removeMessages(SCROLL_MSG);
+        }
     }
 
     /**
@@ -147,7 +158,7 @@ public class BannerViewPager extends ViewPager {
      */
     @Override
     protected void onAttachedToWindow() {
-        Log.e(TAG, "onAttachedToWindow: ");
+        Log.e(TAG, "onAttachedToWindow");
         if (mAdapter != null) {
             initHandler();
             startRoll();
@@ -238,20 +249,17 @@ public class BannerViewPager extends ViewPager {
             new DefaultActivityLifecycleCallbacks() {
                 @Override
                 public void onActivityResumed(Activity activity) {
-                    // 是不是监听的当前Activity的生命周期
-                    // Log.e(TAG, "activity --> " + activity + "  context-->" + getContext())
                     if (activity == mActivity) {
                         // 开启轮播
                         startRoll();
-                        // mHandler.sendEmptyMessageDelayed(mCutDownTime, SCROLL_MSG);
                     }
                 }
 
                 @Override
                 public void onActivityPaused(Activity activity) {
                     if (activity == mActivity) {
-                        // 停止轮播
-                        mHandler.removeMessages(SCROLL_MSG);
+                        // 暂停轮播
+                        pauseRoll();
                     }
                 }
             };
