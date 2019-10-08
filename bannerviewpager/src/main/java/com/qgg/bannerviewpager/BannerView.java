@@ -51,6 +51,10 @@ public class BannerView extends RelativeLayout {
      */
     private float mWidthProportion, mHeightProportion;
 
+    private int mBannerDescTvColor = 0xff33b5e5;
+
+    private float mBannerDescTvSize;
+
     public BannerView(Context context) {
         this(context, null);
     }
@@ -94,6 +98,9 @@ public class BannerView extends RelativeLayout {
         // 获取底部的颜色
         mBottomColor = array.getColor(R.styleable.BannerView_qgg_bottomColor, mBottomColor);
 
+        mBannerDescTvColor = array.getColor(R.styleable.BannerView_qgg_desc_tv_color, mBannerDescTvColor);
+        mBannerDescTvSize = array.getDimension(R.styleable.BannerView_qgg_desc_tv_size, sp2px(12));
+
         // 获取宽高比例
         mWidthProportion = array.getFloat(R.styleable.BannerView_qgg_withProportion, mWidthProportion);
         mHeightProportion = array.getFloat(R.styleable.BannerView_qgg_heightProportion, mHeightProportion);
@@ -109,6 +116,10 @@ public class BannerView extends RelativeLayout {
         mDotContainerView = findViewById(R.id.dot_container);
         mBannerBv = findViewById(R.id.banner_bottom_view);
         mBannerBv.setBackgroundColor(mBottomColor);
+
+        // 设置描述文字颜色和大小
+        mBannerDescTv.setTextSize(mBannerDescTvSize);
+        mBannerDescTv.setTextColor(mBannerDescTvColor);
     }
 
     /**
@@ -201,6 +212,10 @@ public class BannerView extends RelativeLayout {
             }
             mDotContainerView.addView(indicatorView);
         }
+    }
+
+    public int sp2px(float spValue) {
+        return (int) (spValue * getResources().getDisplayMetrics().scaledDensity + 0.5f);
     }
 
     /**

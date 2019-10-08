@@ -21,5 +21,8 @@
         <!-- 定义宽高比 -->
         <attr name="qgg_withProportion" format="float"/>
         <attr name="qgg_heightProportion" format="float"/>
+        <!-- 描述文字颜色和字体 -->
+        <attr name="qgg_desc_tv_size" format="dimension"/>
+        <attr name="qgg_desc_tv_color" format="color"/>
     </declare-styleable>
 </resources>
