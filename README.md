@@ -1,0 +1,2 @@
+# BannerViewPagerDemo
+封装ViewPager成BannerView
