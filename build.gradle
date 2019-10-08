@@ -22,6 +22,14 @@ allprojects {
         jcenter()
 
     }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+    }
 }
 
 task clean(type: Delete) {
@@ -30,12 +38,12 @@ task clean(type: Delete) {
 
 
 //统一声明配置
-//ext {
-//    userOrg = '*****'
-//    groupId = ''
-//    uploadName = 'android-basiclib-apifactory'
-//    publishVersion = '1.0.0'
-//    desc = ''
-//    website = 'https://github.com/'
-//    licences = ['Apache-2.0']
-//}
+ext {
+    userOrg = 'qingguoguo'
+    groupId = 'com.qingguoguo'
+    uploadName = 'bannerview'
+    publishVersion = '1.0.0'
+    desc = '封装的ViewPager可以用来做banner'
+    website = 'https://github.com/qingguoguo/BannerViewPagerDemo'
+    licences = ['Apache-2.0']
+}
